@@ -1,0 +1,46 @@
+{
+  "name": "astro-ssr-table",
+  "version": "1.0.0",
+  "description": "A complete toolkit for Astro to create powerful, server-side rendered data tables with search, sort, and pagination.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest"
+  },
+  "keywords": [
+    "astro",
+    "astro-component",
+    "table",
+    "datagrid",
+    "ssr"
+  ],
+  "author": "Jon Griffin",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tresero/astro-ssr-table.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tresero/astro-ssr-table/issues"
+  },
+  "homepage": "https://github.com/tresero/astro-ssr-table#readme",
+  "dependencies": {
+    "drizzle-orm": "^0.33.0"
+  },
+  "devDependencies": {
+    "@astrojs/svelte": "^5.9.1",
+    "@libsql/client": "^0.7.0",
+    "@types/node": "^22.0.0",
+    "astro": "^4.15.2",
+    "drizzle-kit": "^0.24.1",
+    "svelte": "^4.2.18",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.4"
+  },
+  "peerDependencies": {
+    "astro": "^4.0.0"
+  }
+}

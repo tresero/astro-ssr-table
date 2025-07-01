@@ -1,0 +1,196 @@
+---
+import {
+  processColumns,
+  type Column,
+  type TableAction
+} from '../lib/table/ColumnProcessor';
+
+interface Props {
+  data: any[];
+  columns: Column[];
+  viewUrl?: string;
+  editUrl?: string;
+  deleteUrl?: string;
+  customActions?: TableAction[];
+  searchTerm?: string;
+  currentSort?: string;
+  currentOrder?: 'asc' | 'desc';
+  getSortUrl?: (column: string) => string;
+  emptyMessage?: string;
+  searchEmptyMessage?: string;
+  showActions?: boolean;
+  primaryColumn?: string;
+}
+
+const {
+  data,
+  columns,
+  viewUrl,
+  editUrl, 
+  deleteUrl,
+  customActions = [],
+  searchTerm = '',
+  currentSort = '',
+  currentOrder = 'asc',
+  getSortUrl,
+  emptyMessage = 'No records found.',
+  searchEmptyMessage = 'No records found matching your search.',
+  showActions = true,
+  primaryColumn
+} = Astro.props;
+
+// This frontmatter logic is already generic and does not need to change.
+const columnData = processColumns(
+  columns,
+  primaryColumn,
+  viewUrl,
+  editUrl,
+  deleteUrl,
+  customActions,
+  showActions
+);
+
+const { allColumns, mobileColumns, primaryColumn: primaryCol, hasActions } = columnData;
+
+const buildUrl = (pattern: string, row: any): string => {
+  return pattern.replace(/\{(\w+)\}/g, (match, key) => {
+    const value = key.includes('.') ? 
+      key.split('.').reduce((obj, prop) => obj?.[prop], row) : 
+      row[key];
+    return value ?? match;
+  });
+};
+
+const getValue = (obj: any, path: string): any => {
+  return path.split('.').reduce((current, prop) => current?.[prop], obj);
+};
+
+const renderColumn = (column: any, row: any, isMobile: boolean = false): string => {
+  const value = getValue(row, column.sortKey || column.key);
+  const renderer = isMobile && column.mobileRender ? column.mobileRender : column.render;
+  return renderer ? renderer(value, row) : (value ?? '—');
+};
+---
+
+<div class="astro-ssr-table-mobile-view">
+  {data.length === 0 ? (
+    <div class="astro-ssr-table-empty-message">
+      {searchTerm ? searchEmptyMessage : emptyMessage}
+    </div>
+  ) : (
+    data.map(row => (
+      <div class="astro-ssr-table-mobile-card">
+        <div class="astro-ssr-table-mobile-card-title">
+          {viewUrl ? (
+            <a href={buildUrl(viewUrl, row)} class="astro-ssr-table-link-view">
+              <span set:html={renderColumn(primaryCol, row, true)} />
+            </a>
+          ) : (
+            <span set:html={renderColumn(primaryCol, row, true)} />
+          )}
+        </div>
+        
+        <div class="astro-ssr-table-mobile-card-body">
+          {mobileColumns.slice(1).map(column => (
+            <div class="astro-ssr-table-mobile-card-field">
+              <span class="astro-ssr-table-mobile-card-label">{column.mobileLabel || column.label}:</span>
+              <span class="astro-ssr-table-mobile-card-value">
+                <span set:html={renderColumn(column, row, true)} />
+              </span>
+            </div>
+          ))}
+        </div>
+        
+        {hasActions && (
+          <div class="astro-ssr-table-actions-mobile">
+            {editUrl && (
+              <a href={buildUrl(editUrl, row)} class="astro-ssr-table-action-link astro-ssr-table-action-link-edit">Edit</a>
+            )}
+            {deleteUrl && (
+              <a href={buildUrl(deleteUrl, row)} class="astro-ssr-table-action-link astro-ssr-table-action-link-delete">Delete</a>
+            )}
+            {customActions.map(action => (
+              <a href={buildUrl(action.url, row)} class={action.className || 'astro-ssr-table-action-link'}>
+                {action.label}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    ))
+  )}
+</div>
+
+<div class="astro-ssr-table-desktop-view">
+  <div class="astro-ssr-table-container">
+    <table class="astro-ssr-table">
+      <thead>
+        <tr>
+          {allColumns.map(column => (
+            <th class={`astro-ssr-table-header ${column.className || ''}`}>
+              {column.sortable && getSortUrl ? (
+                <a href={getSortUrl(column.sortKey || column.key)} class="astro-ssr-table-sort-header">
+                  {column.label}
+                  {currentSort === (column.sortKey || column.key) ? (
+                    <span class="astro-ssr-table-sort-indicator-active">
+                      {currentOrder === 'asc' ? '↑' : '↓'}
+                    </span>
+                  ) : (
+                    <span class="astro-ssr-table-sort-indicator-inactive">⇅</span>
+                  )}
+                </a>
+              ) : (
+                column.label
+              )}
+            </th>
+          ))}
+          {hasActions && (
+            <th class="astro-ssr-table-header astro-ssr-table-header-actions">Actions</th>
+          )}
+        </tr>
+      </thead>
+      <tbody>
+        {data.length === 0 ? (
+          <tr>
+            <td colspan={allColumns.length + (hasActions ? 1 : 0)} class="astro-ssr-table-cell astro-ssr-table-cell-empty">
+              {searchTerm ? searchEmptyMessage : emptyMessage}
+            </td>
+          </tr>
+        ) : (
+          data.map(row => (
+            <tr class="astro-ssr-table-row">
+              {allColumns.map((column, index) => (
+                <td class={`astro-ssr-table-cell ${column.className || ''}`}>
+                  {index === 0 && viewUrl ? (
+                    <a href={buildUrl(viewUrl, row)} class="astro-ssr-table-link-view">
+                      <span set:html={renderColumn(column, row)} />
+                    </a>
+                  ) : (
+                    <span set:html={renderColumn(column, row)} />
+                  )}
+                </td>
+              ))}
+              {hasActions && (
+                <td class="astro-ssr-table-cell">
+                  <div class="astro-ssr-table-actions-desktop">
+                    {editUrl && (
+                      <a href={buildUrl(editUrl, row)} class="astro-ssr-table-action-button astro-ssr-table-action-button-edit">Edit</a>
+                    )}
+                    {deleteUrl && (
+                      <a href={buildUrl(deleteUrl, row)} class="astro-ssr-table-action-button astro-ssr-table-action-button-delete">Delete</a>
+                    )}
+                    {customActions.map(action => (
+                      <a href={buildUrl(action.url, row)} class={action.className || 'astro-ssr-table-action-button'}>
+                        {action.label}
+                      </a>
+                    ))}
+                  </div>
+                </td>
+              )}
+            </tr>
+          ))
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>

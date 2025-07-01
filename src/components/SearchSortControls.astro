@@ -1,0 +1,46 @@
+---
+export interface Props {
+  searchTerm: string;
+  searchPlaceholder: string;
+  sortBy: string;
+  sortOrder: string;
+  baseUrl: string;
+  resultCount?: number;
+}
+
+const { 
+  searchTerm, 
+  searchPlaceholder, 
+  sortBy, 
+  sortOrder, 
+  baseUrl,
+  resultCount 
+} = Astro.props;
+---
+
+<div class="astro-ssr-table-controls">
+  <form method="GET" action={baseUrl} class="astro-ssr-table-search-form">
+    <div class="astro-ssr-table-search-field">
+      <input 
+        type="text" 
+        name="search" 
+        placeholder={searchPlaceholder}
+        value={searchTerm}
+        class="astro-ssr-table-input"
+      />
+      <button type="submit" class="astro-ssr-table-button astro-ssr-table-button-primary">Search</button>
+      {searchTerm && (
+        <a href={baseUrl} class="astro-ssr-table-button astro-ssr-table-button-secondary">Clear</a>
+      )}
+    </div>
+    
+    <input type="hidden" name="sort" value={sortBy} />
+    <input type="hidden" name="order" value={sortOrder} />
+    </form>
+</div>
+
+{searchTerm && typeof resultCount === 'number' && (
+  <div class="astro-ssr-table-search-results">
+    <p>Found {resultCount} record(s) matching "{searchTerm}"</p>
+  </div>
+)}

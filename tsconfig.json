@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      // This alias lets you test your library locally using its package name.
+      // Make sure this matches the "name" in your package.json.
+      "astro-ssr-table": ["src/index.ts"]
+    },
+    // Required for Astro components
+    "jsx": "preserve",
+    "jsxImportSource": "astro"
+  }
+}

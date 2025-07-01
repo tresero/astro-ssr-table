@@ -1,0 +1,259 @@
+/* src/styles.css */
+
+/*
+ * ========================================================================
+ * Astro SSR Table Toolkit :: Default Theme
+ * ========================================================================
+ */
+
+/* --- 1. Theme Variables --- */
+/* Users of your library can easily override these variables in their own
+   stylesheet to quickly theme the components to their brand. */
+:root {
+  --ssr-table-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  
+  --ssr-table-primary-color: #2563eb;       /* blue-600 */
+  --ssr-table-primary-color-hover: #1d4ed8; /* blue-700 */
+  --ssr-table-primary-text-color: #ffffff;
+
+  --ssr-table-secondary-bg-color: #e5e7eb;  /* gray-200 */
+  --ssr-table-secondary-bg-hover: #d1d5db; /* gray-300 */
+  --ssr-table-secondary-text-color: #374151;/* gray-700 */
+
+  --ssr-table-border-color: #d1d5db;        /* gray-300 */
+  --ssr-table-border-radius: 0.375rem;      /* 6px */
+  --ssr-table-text-color-light: #6b7280;   /* gray-500 */
+  --ssr-table-text-color-dark: #1f2937;    /* gray-800 */
+  --ssr-table-focus-ring-color: #93c5fd;   /* blue-300 */
+}
+
+/* --- 2. Shared Styles (Inputs, Buttons) --- */
+
+.astro-ssr-table-input,
+.astro-ssr-table-select {
+  font-family: var(--ssr-table-font-sans);
+  border: 1px solid var(--ssr-table-border-color);
+  border-radius: var(--ssr-table-border-radius);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  background-color: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.astro-ssr-table-input:focus,
+.astro-ssr-table-select:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-color: var(--ssr-table-primary-color);
+  box-shadow: 0 0 0 3px var(--ssr-table-focus-ring-color);
+}
+
+.astro-ssr-table-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--ssr-table-border-radius);
+  font-family: var(--ssr-table-font-sans);
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.astro-ssr-table-button-primary {
+  background-color: var(--ssr-table-primary-color);
+  color: var(--ssr-table-primary-text-color);
+}
+.astro-ssr-table-button-primary:hover {
+  background-color: var(--ssr-table-primary-color-hover);
+}
+
+.astro-ssr-table-button-secondary {
+  background-color: var(--ssr-table-secondary-bg-color);
+  color: var(--ssr-table-secondary-text-color);
+  border-color: var(--ssr-table-border-color);
+}
+.astro-ssr-table-button-secondary:hover {
+  background-color: var(--ssr-table-secondary-bg-hover);
+}
+
+
+/* --- 3. SearchSortControls Component --- */
+
+.astro-ssr-table-controls {
+  margin-bottom: 1rem;
+}
+
+.astro-ssr-table-search-form {
+  display: flex;
+  align-items: center;
+}
+
+.astro-ssr-table-search-field {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.astro-ssr-table-search-results {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ssr-table-text-color-light);
+}
+
+
+/* --- 4. Pagination Component --- */
+
+.astro-ssr-table-pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  font-family: var(--ssr-table-font-sans);
+}
+
+.astro-ssr-table-pagination-info {
+  font-size: 0.875rem;
+  color: var(--ssr-table-text-color-light);
+}
+
+.astro-ssr-table-pagination-nav {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.astro-ssr-table-pagination-nav-mobile {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.astro-ssr-table-pagination-nav-desktop {
+  display: none; /* Hidden by default */
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Show desktop nav on larger screens */
+@media (min-width: 640px) {
+  .astro-ssr-table-pagination-nav-mobile {
+    display: none;
+  }
+  .astro-ssr-table-pagination-nav-desktop {
+    display: flex;
+  }
+}
+
+.astro-ssr-table-pagination-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--ssr-table-border-radius);
+  text-decoration: none;
+  color: var(--ssr-table-text-color-dark);
+  background-color: white;
+  border: 1px solid var(--ssr-table-border-color);
+  transition: background-color 0.2s, border-color 0.2s;
+  user-select: none;
+}
+.astro-ssr-table-pagination-button:hover {
+  background-color: var(--ssr-table-secondary-bg-color);
+}
+
+.astro-ssr-table-pagination-button-mobile {
+  padding: 0.5rem;
+  min-width: 2.5rem; /* 40px */
+}
+
+.astro-ssr-table-pagination-button-current {
+  background-color: var(--ssr-table-primary-color);
+  color: var(--ssr-table-primary-text-color);
+  border-color: var(--ssr-table-primary-color);
+  z-index: 10;
+}
+.astro-ssr-table-pagination-button-current:hover {
+  background-color: var(--ssr-table-primary-color);
+}
+
+.astro-ssr-table-pagination-button-disabled {
+  color: var(--ssr-table-text-color-light);
+  background-color: #f9fafb; /* gray-50 */
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.astro-ssr-table-pagination-button-disabled:hover {
+  background-color: #f9fafb;
+}
+
+.astro-ssr-table-pagination-ellipsis {
+  padding: 0.5rem 0.25rem;
+  color: var(--ssr-table-text-color-light);
+}
+
+/* --- 5. Anticipated ResponsiveTable Styles --- */
+
+.astro-ssr-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--ssr-table-border-color);
+  border-radius: var(--ssr-table-border-radius);
+}
+
+.astro-ssr-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--ssr-table-font-sans);
+}
+
+.astro-ssr-table-header {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ssr-table-text-color-light);
+  background-color: #f9fafb; /* gray-50 */
+  border-bottom: 1px solid var(--ssr-table-border-color);
+}
+
+.astro-ssr-table-sort-header {
+  color: var(--ssr-table-text-color-dark);
+  text-decoration: none;
+}
+.astro-ssr-table-sort-header:hover {
+  color: var(--ssr-table-primary-color);
+}
+
+.astro-ssr-table-row:not(:last-child) {
+  border-bottom: 1px solid var(--ssr-table-border-color);
+}
+
+.astro-ssr-table-row:hover {
+  background-color: #f9fafb; /* gray-50 */
+}
+
+.astro-ssr-table-cell {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--ssr-table-text-color-dark);
+  vertical-align: middle;
+}
+
+.astro-ssr-table-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}

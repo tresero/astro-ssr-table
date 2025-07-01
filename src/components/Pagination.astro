@@ -1,0 +1,107 @@
+---
+// The frontmatter script is already generic and does not need to change.
+export interface Props {
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalRecords: number;
+    pageSize: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+    startRecord: number;
+    endRecord: number;
+  };
+  getPageUrl: (page: number) => string;
+}
+
+const { pagination, getPageUrl } = Astro.props;
+
+// This helper function is self-contained and generic.
+const getDesktopPageNumbers = () => {
+  const { currentPage, totalPages } = pagination;
+  const numbers: (number | string)[] = [];
+  
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) numbers.push(i);
+  } else {
+    if (currentPage <= 4) {
+      for (let i = 1; i <= 5; i++) numbers.push(i);
+      numbers.push('...');
+      numbers.push(totalPages);
+    } else if (currentPage >= totalPages - 3) {
+      numbers.push(1);
+      numbers.push('...');
+      for (let i = totalPages - 4; i <= totalPages; i++) numbers.push(i);
+    } else {
+      numbers.push(1);
+      numbers.push('...');
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) numbers.push(i);
+      numbers.push('...');
+      numbers.push(totalPages);
+    }
+  }
+  return numbers;
+};
+
+const desktopPageNumbers = getDesktopPageNumbers();
+---
+
+<div class="astro-ssr-table-pagination-container">
+  <div class="astro-ssr-table-pagination-info">
+    Showing {pagination.startRecord}-{pagination.endRecord} of {pagination.totalRecords} records
+  </div>
+
+  <nav class="astro-ssr-table-pagination-nav">
+    <div class="astro-ssr-table-pagination-nav-mobile">
+      {pagination.hasPrev ? (
+        <a href={getPageUrl(pagination.currentPage - 1)} class="astro-ssr-table-pagination-button astro-ssr-table-pagination-button-mobile" aria-label={`Go to page ${pagination.currentPage - 1}`}>
+          ←
+        </a>
+      ) : (
+        <span class="astro-ssr-table-pagination-button astro-ssr-table-pagination-button-mobile astro-ssr-table-pagination-button-disabled" aria-label="Previous page not available">←</span>
+      )}
+
+      <span class="astro-ssr-table-pagination-mobile-label" aria-live="polite">
+        Page {pagination.currentPage} of {pagination.totalPages}
+      </span>
+
+      {pagination.hasNext ? (
+        <a href={getPageUrl(pagination.currentPage + 1)} class="astro-ssr-table-pagination-button astro-ssr-table-pagination-button-mobile" aria-label={`Go to page ${pagination.currentPage + 1}`}>
+          →
+        </a>
+      ) : (
+        <span class="astro-ssr-table-pagination-button astro-ssr-table-pagination-button-mobile astro-ssr-table-pagination-button-disabled" aria-label="Next page not available">→</span>
+      )}
+    </div>
+
+    <div class="astro-ssr-table-pagination-nav-desktop">
+      {pagination.hasPrev ? (
+        <a href={getPageUrl(pagination.currentPage - 1)} class="astro-ssr-table-pagination-button">
+          &larr; Previous
+        </a>
+      ) : (
+        <span class="astro-ssr-table-pagination-button astro-ssr-table-pagination-button-disabled">&larr; Previous</span>
+      )}
+
+      {desktopPageNumbers.map((page) => (
+        typeof page === 'number' ? (
+          page === pagination.currentPage ? (
+            <span class="astro-ssr-table-pagination-button astro-ssr-table-pagination-button-current" aria-current="page">{page}</span>
+          ) : (
+            <a href={getPageUrl(page)} class="astro-ssr-table-pagination-button">{page}</a>
+          )
+        ) : (
+          <span class="astro-ssr-table-pagination-ellipsis">...</span>
+        )
+      ))}
+
+      {pagination.hasNext ? (
+        <a href={getPageUrl(pagination.currentPage + 1)} class="astro-ssr-table-pagination-button">
+          Next &rarr;
+        </a>
+      ) : (
+        <span class="astro-ssr-table-pagination-button astro-ssr-table-pagination-button-disabled">Next &rarr;</span>
+      )}
+    </div>
+  </nav>
+</div>
