@@ -21,74 +21,42 @@ Designed for Astro projects using SSR and an SQL-based ORM like Drizzle, this li
 npm install astro-ssr-table
 
 Getting Started
-To see a full implementation guide, please read the How to Use Guide.
-
-Components
-<ResponsiveTable /> - The core component for displaying data in a table on desktop and a list on mobile.
-
-<Pagination /> - A complete pagination control with page numbers, next/previous buttons, and a page size selector.
-
-<SearchSortControls /> - A search input and clear button for filtering results.
-
-Helpers
-SearchSortHelper: A powerful class that hooks into Astro's URL object to manage all state for searching, sorting, and pagination.
-
-ColumnProcessor: A set of utility functions used internally by the ResponsiveTable to validate and process column definitions.
-
-Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
-
-Fork the Project
-
-Create your Feature Branch (git checkout -b feature/AmazingFeature)
-
-Commit your Changes (git commit -m 'feat: Add some AmazingFeature')
-
-Push to the Branch (git push origin feature/AmazingFeature)
-
-Open a Pull Request
-
-License
-Distributed under the MIT License. See LICENSE.md for more information.
-
-
-Getting Started
 ---------------
 
-To see a full implementation guide, please read the [**How to Use Guide**](https://www.google.com/search?q=./USAGE.md).
+To see a full implementation guide, please read the **[How to Use Guide](https://www.google.com/search?q=./USAGE.md)**.
 
 Components
 ----------
 
-*   \- The core component for displaying data in a table on desktop and a list on mobile.
-    
-*   \- A complete pagination control with page numbers, next/previous buttons, and a page size selector.
-    
-*   \- A search input and clear button for filtering results.
-    
+-   `<ResponsiveTable />` - The core component for displaying data in a table on desktop and a list on mobile.
+
+-   `<Pagination />` - A complete pagination control with page numbers, next/previous buttons, and a page size selector.
+
+-   `<SearchSortControls />` - A search input and clear button for filtering results.
 
 Helpers
 -------
 
-*   **SearchSortHelper**: A powerful class that hooks into Astro's URL object to manage all state for searching, sorting, and pagination.
-    
-*   **ColumnProcessor**: A set of utility functions used internally by the ResponsiveTable to validate and process column definitions.
-    
+-   **`SearchSortHelper`**: A powerful class that hooks into Astro's `URL` object to manage all state for searching, sorting, and pagination.
+
+-   **`ColumnProcessor`**: A set of utility functions used internally by the `ResponsiveTable` to validate and process column definitions.
 
 Contributing
 ------------
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://www.google.com/search?q=https://github.com/your-username/astro-ssr-table/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://www.google.com/search?q=https://github.com/tresero/astro-ssr-table/issues).
 
-2.  Create your Feature Branch (git checkout -b feature/AmazingFeature)
-    
-3.  Commit your Changes (git commit -m 'feat: Add some AmazingFeature')
-    
+1.  Fork the Project
+
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+
+3.  Commit your Changes (`git commit -m 'feat: Add some AmazingFeature'`)
+
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
 
 5.  Open a Pull Request
-    
 
 License
 -------
 
-Distributed under the MIT License. See LICENSE.md for more information.
+Distributed under the MIT License. See `LICENSE.md` for more information.
