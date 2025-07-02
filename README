@@ -23,7 +23,7 @@ npm install astro-ssr-table
 Getting Started
 ---------------
 
-To see a full implementation guide, please read the **[How to Use Guide](https://www.google.com/search?q=./USAGE.md)**.
+To see a full implementation guide, please read the USAGE.md file.
 
 Components
 ----------
@@ -44,7 +44,7 @@ Helpers
 Contributing
 ------------
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://www.google.com/search?q=https://github.com/tresero/astro-ssr-table/issues).
+Contributions, issues, and feature requests are welcome!
 
 1.  Fork the Project
 
