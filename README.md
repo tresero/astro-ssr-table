@@ -1,6 +1,5 @@
 # Astro SSR Table Toolkit
 
-![NPM Version](https://img.shields.io/npm/v/astro-ssr-table.svg)](https://www.npmjs.com/package/astro-ssr-table)
 ![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
 A complete toolkit for Astro to create powerful, server-side rendered data tables. Includes helpers and components for server-side pagination, sorting, and full-text search.
